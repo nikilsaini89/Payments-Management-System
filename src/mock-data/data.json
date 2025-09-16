@@ -1,0 +1,135 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@mail.com"
+    },
+    {
+      "id": "2",
+      "name": "Isha Verma",
+      "email": "isha.verma@mail.com"
+    },
+    {
+      "id": "3",
+      "name": "Rohan Mehta",
+      "email": "rohan.mehta@mail.com"
+    },
+    {
+      "id": "4",
+      "name": "Priya Nair",
+      "email": "priya.nair@mail.com"
+    },
+    {
+      "id": "5",
+      "name": "Aditya Singh",
+      "email": "aditya.singh@mail.com"
+    },
+    {
+      "id": "6",
+      "name": "Neha Kapoor",
+      "email": "neha.kapoor@mail.com"
+    },
+    {
+      "name": "Karan Malhotra",
+      "email": "karan.malhotra@mail.com",
+      "role": "Admin",
+      "id": "7"
+    },
+    {
+      "id": "8",
+      "name": "Sanya Gupta",
+      "email": "sanya.gupta@mail.com"
+    },
+    {
+      "id": "9",
+      "name": "Vikram Rao",
+      "email": "vikram.rao@mail.com"
+    },
+    {
+      "id": "10",
+      "name": "Meera Iyer",
+      "email": "meera.iyer@mail.com"
+    },
+    {
+      "name": "Generic H2 (Embedded)",
+      "email": "nikilsaini74@gmail.com",
+      "role": "Admin",
+      "id": "6698"
+    },
+    {
+      "id": "42e7",
+      "name": "Nikil Saini",
+      "email": "nikilsaini74@gmail.com",
+      "role": "Admin"
+    },
+    {
+      "id": "420000001",
+      "name": "Nikil",
+      "email": "nikilsaini74@gmail.com",
+      "role": "Admin"
+    }
+  ],
+  "payments": [
+    {
+      "id": "101",
+      "userId": 1,
+      "amount": 1200,
+      "status": "SUCCESS"
+    },
+    {
+      "id": "102",
+      "userId": 2,
+      "amount": 750,
+      "status": "PENDING"
+    },
+    {
+      "id": "103",
+      "userId": 3,
+      "amount": 2000,
+      "status": "FAILED"
+    },
+    {
+      "id": "104",
+      "userId": 4,
+      "amount": 950,
+      "status": "SUCCESS"
+    },
+    {
+      "id": "105",
+      "userId": 5,
+      "amount": 500,
+      "status": "SUCCESS"
+    },
+    {
+      "id": "106",
+      "userId": 6,
+      "amount": 1800,
+      "status": "PENDING"
+    },
+    {
+      "id": "107",
+      "userId": 7,
+      "amount": 3000,
+      "status": "SUCCESS"
+    },
+    {
+      "id": "108",
+      "userId": 8,
+      "amount": 1450,
+      "status": "FAILED"
+    },
+    {
+      "id": "109",
+      "userId": 9,
+      "amount": 2200,
+      "status": "SUCCESS"
+    },
+    {
+      "id": "110",
+      "userId": 10,
+      "amount": 800,
+      "status": "PENDING"
+    }
+  ]
+}
