@@ -1,33 +1,33 @@
 <template>
   <nav class="navbar">
     <div class="nav-left">
+      <img src="../../src/assets/logo.png" alt="logo" width="40" height="40" />
       <router-link to="/" class="logo">Payment Management</router-link>
     </div>
-    <div class="nav-right">
-        <router-link
-            to="/"
-            class="nav-link"
-            :class="{ active: $route.path === '/' }"
-            >Dashboard</router-link>
+    <div>
+      <router-link
+        to="/"
+        class="nav-link"
+        :class="{ active : isActive('/') }"
+        >Dashboard</router-link>
 
-        <router-link
-            to="/users"
-            class="nav-link"
-            :class="{ active: $route.path.startsWith('/users') }"
-            >Users</router-link>
-
-        <router-link
-            to="/payments"
-            class="nav-link"
-            :class="{ active: $route.path.startsWith('/payments') }"
-            >Payments</router-link>
+      <router-link
+      to="/users"
+      class="nav-link"
+      :class="{ active : isActive('/users') }"
+      >Users</router-link>
+      
+      <router-link to="/payments"
+      class="nav-link"
+      :class="{ active : isActive('/payments') }"
+      >Payments</router-link>
     </div>
   </nav>
 </template>
 
 <script>
 export default {
-  name: 'NavbarC',
+  name: 'NavbarComponent',
   methods: {
     isActive(path) {
         if (path === '/') {
@@ -51,6 +51,12 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .logo {
