@@ -1,135 +1,243 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Aarav Sharma",
-      "email": "aarav.sharma@mail.com"
+      "email": "aarav.sharma@mail.com",
+      "upiId": "aarav@upi",
+      "phone": "9876543210",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-01-10T12:34:56Z"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Isha Verma",
-      "email": "isha.verma@mail.com"
+      "email": "isha.verma@mail.com",
+      "upiId": "isha@upi",
+      "phone": "9876501234",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-02-14T09:21:00Z"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Rohan Mehta",
-      "email": "rohan.mehta@mail.com"
+      "email": "rohan.mehta@mail.com",
+      "upiId": "rohan@upi",
+      "phone": "9988776655",
+      "kycStatus": "PENDING",
+      "createdAt": "2025-03-01T16:10:45Z"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Priya Nair",
-      "email": "priya.nair@mail.com"
+      "email": "priya.nair@mail.com",
+      "upiId": "priya@upi",
+      "phone": "9123456780",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-03-18T11:45:22Z"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "Aditya Singh",
-      "email": "aditya.singh@mail.com"
+      "email": "aditya.singh@mail.com",
+      "upiId": "aditya@upi",
+      "phone": "9898989898",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-04-05T19:00:12Z"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Neha Kapoor",
-      "email": "neha.kapoor@mail.com"
+      "email": "neha.kapoor@mail.com",
+      "upiId": "neha@upi",
+      "phone": "9765432100",
+      "kycStatus": "PENDING",
+      "createdAt": "2025-04-22T08:15:35Z"
     },
     {
+      "id": 7,
       "name": "Karan Malhotra",
       "email": "karan.malhotra@mail.com",
-      "role": "Admin",
-      "id": "7"
+      "upiId": "karan@upi",
+      "phone": "9988001122",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-05-03T14:40:50Z"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "Sanya Gupta",
-      "email": "sanya.gupta@mail.com"
+      "email": "sanya.gupta@mail.com",
+      "upiId": "sanya@upi",
+      "phone": "9123412345",
+      "kycStatus": "REJECTED",
+      "createdAt": "2025-05-15T20:20:30Z"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "Vikram Rao",
-      "email": "vikram.rao@mail.com"
+      "email": "vikram.rao@mail.com",
+      "upiId": "vikram@upi",
+      "phone": "9786543210",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-06-01T10:05:12Z"
     },
     {
-      "id": "10",
+      "id": 10,
       "name": "Meera Iyer",
-      "email": "meera.iyer@mail.com"
+      "email": "meera.iyer@mail.com",
+      "upiId": "meera@upi",
+      "phone": "9000011223",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-06-10T07:50:00Z"
     },
     {
-      "name": "Generic H2 (Embedded)",
-      "email": "nikilsaini74@gmail.com",
-      "role": "Admin",
-      "id": "6698"
+      "id": 11,
+      "name": "SUMIT PRADHAN",
+      "email": "SUMITNEGI@gmail.com",
+      "upiId": "sumit@upi",
+      "phone": "9876509876",
+      "kycStatus": "VERIFIED",
+      "createdAt": "2025-07-01T17:33:45Z"
     },
     {
-      "id": "42e7",
+      "id": 12,
       "name": "Nikil Saini",
       "email": "nikilsaini74@gmail.com",
-      "role": "Admin"
-    },
-    {
-      "id": "420000001",
-      "name": "Nikil",
-      "email": "nikilsaini74@gmail.com",
-      "role": "Admin"
+      "upiId": "sdj@",
+      "phone": "9728183200",
+      "kycStatus": "VERIFIED"
     }
   ],
   "payments": [
     {
-      "id": "101",
-      "userId": 1,
+      "id": "201",
+      "fromUserId": 1,
+      "toUserId": 2,
       "amount": 1200,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "method": "UPI",
+      "referenceId": "TXN201001",
+      "timestamp": "2025-08-01T12:30:00Z"
     },
     {
-      "id": "102",
-      "userId": 2,
+      "id": "202",
+      "fromUserId": 2,
+      "toUserId": 3,
       "amount": 750,
-      "status": "PENDING"
+      "status": "PENDING",
+      "method": "CARD",
+      "referenceId": "TXN202002",
+      "timestamp": "2025-08-02T14:10:00Z"
     },
     {
-      "id": "103",
-      "userId": 3,
+      "id": "203",
+      "fromUserId": 3,
+      "toUserId": 4,
       "amount": 2000,
-      "status": "FAILED"
+      "status": "FAILED",
+      "method": "UPI",
+      "referenceId": "TXN203003",
+      "timestamp": "2025-08-03T09:45:00Z"
     },
     {
-      "id": "104",
-      "userId": 4,
+      "id": "204",
+      "fromUserId": 4,
+      "toUserId": 5,
       "amount": 950,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "method": "NETBANKING",
+      "referenceId": "TXN204004",
+      "timestamp": "2025-08-04T18:20:00Z"
     },
     {
-      "id": "105",
-      "userId": 5,
+      "id": "205",
+      "fromUserId": 5,
+      "toUserId": 6,
       "amount": 500,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "method": "UPI",
+      "referenceId": "TXN205005",
+      "timestamp": "2025-08-05T11:05:00Z"
     },
     {
-      "id": "106",
-      "userId": 6,
+      "id": "206",
+      "fromUserId": 6,
+      "toUserId": 7,
       "amount": 1800,
-      "status": "PENDING"
+      "status": "PENDING",
+      "method": "CARD",
+      "referenceId": "TXN206006",
+      "timestamp": "2025-08-06T13:50:00Z"
     },
     {
-      "id": "107",
-      "userId": 7,
+      "id": "207",
+      "fromUserId": 7,
+      "toUserId": 8,
       "amount": 3000,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "method": "UPI",
+      "referenceId": "TXN207007",
+      "timestamp": "2025-08-07T20:15:00Z"
     },
     {
-      "id": "108",
-      "userId": 8,
+      "id": "208",
+      "fromUserId": 8,
+      "toUserId": 9,
       "amount": 1450,
-      "status": "FAILED"
+      "status": "FAILED",
+      "method": "NETBANKING",
+      "referenceId": "TXN208008",
+      "timestamp": "2025-08-08T10:25:00Z"
     },
     {
-      "id": "109",
-      "userId": 9,
+      "id": "209",
+      "fromUserId": 9,
+      "toUserId": 10,
       "amount": 2200,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "method": "UPI",
+      "referenceId": "TXN209009",
+      "timestamp": "2025-08-09T16:40:00Z"
     },
     {
-      "id": "110",
-      "userId": 10,
+      "id": "210",
+      "fromUserId": 10,
+      "toUserId": 11,
       "amount": 800,
-      "status": "PENDING"
+      "status": "PENDING",
+      "method": "CARD",
+      "referenceId": "TXN210010",
+      "timestamp": "2025-08-10T09:00:00Z"
+    },
+    {
+      "id": "211",
+      "fromUserId": 11,
+      "toUserId": 1,
+      "amount": 45,
+      "status": "SUCCESS",
+      "method": "UPI",
+      "referenceId": "TXN211011",
+      "timestamp": "2025-08-11T14:55:00Z"
+    },
+    {
+      "id": "212",
+      "fromUserId": 5,
+      "toUserId": 2,
+      "amount": 434,
+      "status": "PENDING",
+      "method": "UPI",
+      "referenceId": "TXN212012",
+      "timestamp": "2025-08-12T19:30:00Z"
+    },
+    {
+      "id": "213",
+      "fromUserId": 11,
+      "toUserId": 3,
+      "amount": 8900,
+      "status": "SUCCESS",
+      "method": "NETBANKING",
+      "referenceId": "TXN213013",
+      "timestamp": "2025-08-13T08:45:00Z"
     }
   ]
 }
