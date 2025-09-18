@@ -1,46 +1,86 @@
-// src/services/dataService.js
-import axios from 'axios'
+import axios from 'axios';
 
-const API_URL = 'http://localhost:3000'
+
+const BASE_URL = 'http://localhost:3000'
 
 // ---------------- USERS ----------------
 export const getUsers = async () => {
-  const res = await axios.get(`${API_URL}/users`)
-  return res.data
-}
+  try {
+    const response = await axios.get(`${BASE_URL}/users`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
+};
 
 export const getUserById = async (id) => {
-  const res = await axios.get(`${API_URL}/users/${id}`)
-  return res.data
-}
+  try {
+    const res = await axios.get(`${BASE_URL}/users/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error fetching user with id ${id}:`, error);
+    return null;
+  }
+};
 
 export const createUser = async (user) => {
-  const res = await axios.post(`${API_URL}/users`, user)
-  return res.data
-}
+  try {
+    const res = await axios.post(`${BASE_URL}/users`, user);
+    return res.data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return null;
+  }
+};
 
 export const updateUser = async (id, user) => {
-  const res = await axios.put(`${API_URL}/users/${id}`, user)
-  return res.data
-}
+  try {
+    const res = await axios.put(`${BASE_URL}/users/${id}`, user);
+    return res.data;
+  } catch (error) {
+    console.error(`Error updating user with id ${id}:`, error);
+    return null;
+  }
+};
 
 // ---------------- PAYMENTS ----------------
 export const getPayments = async () => {
-  const res = await axios.get(`${API_URL}/payments`)
-  return res.data
-}
+  try {
+    const res = await axios.get(`${BASE_URL}/payments`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+    return [];
+  }
+};
 
 export const getPaymentById = async (id) => {
-  const res = await axios.get(`${API_URL}/payments/${id}`)
-  return res.data
-}
+  try {
+    const res = await axios.get(`${BASE_URL}/payments/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error fetching payment with id ${id}:`, error);
+    return null;
+  }
+};
 
 export const createPayment = async (payment) => {
-  const res = await axios.post(`${API_URL}/payments`, payment)
-  return res.data
-}
+  try {
+    const res = await axios.post(`${BASE_URL}/payments`, payment);
+    return res.data;
+  } catch (error) {
+    console.error("Error creating payment:", error);
+    return null;
+  }
+};
 
 export const updatePayment = async (id, payment) => {
-  const res = await axios.put(`${API_URL}/payments/${id}`, payment)
-  return res.data
-}
+  try {
+    const res = await axios.put(`${BASE_URL}/payments/${id}`, payment);
+    return res.data;
+  } catch (error) {
+    console.error(`Error updating payment with id ${id}:`, error);
+    return null;
+  }
+};
