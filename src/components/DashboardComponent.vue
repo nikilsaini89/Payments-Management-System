@@ -1,12 +1,11 @@
 <template>
   <div class="dashboard">
-    <!-- Title -->
+
     <header class="dashboard-header">
-      <h1 style="margin: 0px;">Payment Management Dashboard</h1>
+      <h1 class="payment-header">Dashboard</h1>
       <p class="subtitle">Overview of users and payments</p>
     </header>
 
-    <!-- Stats Cards -->
     <section class="stats-cards">
       <div class="card card-blue">
         <h2>Total Users</h2>
@@ -56,7 +55,6 @@ export default {
     }
   },
   async mounted() {
-    // Fetch data from JSON Server
     this.users = await getUsers()
     this.payments = await getPayments()
   },
@@ -86,6 +84,10 @@ export default {
 .card-green { background-color: #22c55e; }
 .card-yellow { background-color: #eab308; }
 .card-red { background-color: #ef4444; }
+
+.payment-header{
+  margin: 0px;
+}
 
 .dashboard {
   padding: 2rem;
