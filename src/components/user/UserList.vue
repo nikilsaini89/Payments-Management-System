@@ -1,20 +1,18 @@
 <template>
   <div class="user-list">
-    <!-- Header -->
     <header class="header">
       <h1>User Management</h1>
       <button class="add-btn" @click="$router.push('/users/new')">+ Add User</button>
     </header>
 
-    <!-- Table -->
     <table class="user-table">
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Role</th>
-          <th>Actions</th>
+          <th>Phone</th>
+          <th>UPI Id</th>
         </tr>
       </thead>
       <tbody>
@@ -22,10 +20,8 @@
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
-          <td>
-            <button class="edit-btn" @click="$router.push(`/users/${user.id}/edit`)">Edit</button>
-          </td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.upiId }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,15 +40,14 @@ export default {
   },
   async mounted() {
     this.users = await getUsers()
-    console.log(this.users) 
   }
 }
 </script>
 
 <style scoped>
 .user-list {
-  padding: 2rem;
-  font-family: Arial, sans-serif;
+  padding: 1rem 2rem 2rem 2rem;
+  
 }
 
 .header {

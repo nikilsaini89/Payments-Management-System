@@ -1,6 +1,6 @@
 <template>
   <div class="user-form">
-    <h1>{{ isEditMode ? 'Edit User' : 'Add New User' }}</h1>
+    <h1>Add New User</h1>
 
     <form @submit.prevent="handleSubmit">
       <!-- Name -->
@@ -27,21 +27,34 @@
         <span class="error" v-if="errors.email">{{ errors.email }}</span>
       </div>
 
-      <!-- Role -->
+      <!-- UPI -->
       <div class="form-group">
-        <label for="role">Role</label>
-        <select id="role" v-model="form.role">
-          <option disabled value="">Select Role</option>
-          <option value="Admin">Admin</option>
-          <option value="User">User</option>
-        </select>
-        <span class="error" v-if="errors.role">{{ errors.role }}</span>
+        <label for="upiId">UPI Id</label>
+        <input
+          id="upiId"
+          type="text"
+          v-model="form.upiId"
+          placeholder="Enter UPI Id"
+        />
+        <span class="error" v-if="errors.upiId">{{ errors.upiId }}</span>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          id="phone"
+          type="text"
+          v-model="form.phone"
+          placeholder="Enter Phone Number"
+        />
+        <span class="error" v-if="errors.phone">{{ errors.phone }}</span>
       </div>
 
       <!-- Buttons -->
       <div class="form-actions">
         <button type="submit" class="save-btn" :disabled="isLoading">
-          {{ isEditMode ? 'Update' : 'Create' }}
+          Create
         </button>
         <button type="button" class="cancel-btn" @click="cancel">
           Cancel
@@ -52,7 +65,7 @@
 </template>
 
 <script>
-import { getUsers, getUserById, createUser, updateUser } from '../../services/dataService'
+import { getUsers, createUser } from '../../services/dataService'
 
 export default {
   name: 'UserForm',
@@ -61,12 +74,14 @@ export default {
       form: {
         name: '',
         email: '',
-        role: ''
+        upiId: '',
+        phone: '',
       },
       errors: {
         name: '',
         email: '',
-        role: ''
+        upiId: '',
+        phone: '',  
       },
       isLoading: false
     }
@@ -75,49 +90,28 @@ export default {
     userId() {
       return this.$route.params.id
     },
-    isEditMode() {
-      return !!this.userId
-    }
-  },
-  async mounted() {
-    if (this.isEditMode) {
-      try {
-        const user = await getUserById(this.userId)
-        if (user) {
-          this.form.name = user.name
-          this.form.email = user.email
-          this.form.role = user.role
-        }
-      } catch (err) {
-        console.error(err)
-        alert('Failed to load user data')
-      }
-    }
+    
   },
   methods: {
     validate() {
       let valid = true
       this.errors.name = this.form.name ? '' : 'Name is required'
       this.errors.email = /\S+@\S+\.\S+/.test(this.form.email) ? '' : 'Invalid email'
-      this.errors.role = this.form.role ? '' : 'Role is required'
-      if (this.errors.name || this.errors.email || this.errors.role) valid = false
+      this.errors.upiId = this.form.upiId ? '' : 'UPI Id is required'
+      this.errors.phone = /^\d{10}$/.test(this.form.phone) ? '' : 'Invalid phone number'
+      if (this.errors.name || this.errors.email || this.errors.upiId || this.errors.phone) valid = false
       return valid
     },
     
     async handleSubmit() {
-    if (!this.validate()) return
+    if (!this.validate()) return;
 
     this.isLoading = true
     try {
-        if (this.isEditMode) {
-        await updateUser(this.userId, this.form)
-        } else {
-        // Fetch all users to calculate max ID
         const allUsers = await getUsers()
         const maxId = allUsers.length ? Math.max(...allUsers.map(u => u.id)) : 0
         const newUser = { id: maxId + 1, ...this.form }
         await createUser(newUser)
-        }
         this.$router.push('/users')
     } catch (err) {
         console.error(err)
@@ -141,7 +135,6 @@ export default {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
 }
 h1 { margin-bottom: 1.5rem; text-align: center; color: #333; }
 .form-group { display: flex; flex-direction: column; margin-bottom: 1rem; }
@@ -167,7 +160,6 @@ input:focus, select:focus {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.3s;
 }
 .save-btn:hover { background-color: #16a34a; }
 .cancel-btn {
@@ -178,7 +170,6 @@ input:focus, select:focus {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.3s;
 }
 .cancel-btn:hover { background-color: #dc2626; }
 </style>
