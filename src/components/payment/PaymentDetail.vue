@@ -56,7 +56,7 @@ export default {
 
   created() {
     const payment = localStorage.getItem(LOCAL_STORAGE.SELECTED_PAYMENT);
-    this.paymentDetails =  payment ? JSON.parse(JSON) : null;
+    this.paymentDetails =  payment ? JSON.parse(payment) : null;
   },
 
   methods: {

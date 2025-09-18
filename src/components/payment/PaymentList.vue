@@ -14,7 +14,7 @@
           </select>
         </div>
         <div>        
-          <button class="create-btn" @click="goToCreatePayment">+ Create Payment</button>
+          <button class="create-btn" @click="this.$router.push('/payments/new')">+ Create Payment</button>
         </div>
       </div>
     </header>
@@ -29,11 +29,11 @@
           <th>Amount</th>
         </tr> 
       </thead>
-      <tbody>
-        <tr v-for="(payment, index) in getFilterdPayments()" :key="payment.id" @click="viewPayment(payment.id)" style="cursor: pointer;">
+      <tbody v-if="payments.length">
+        <tr v-for="(payment, index) in getFilterdPayments()" :key="payment.id" @click="setPaymentDetailsInLocalStorage(payment.id)" style="cursor: pointer;">
           <td>{{ index + 1 }}</td>
-          <td>{{ getUserName(payment.fromUserId)}} ({{ payment.fromUserId }})</td>
-          <td>{{ getUserName(payment.toUserId)}} ({{ payment.toUserId }})</td>
+          <td>{{ userMap[payment.fromUserId] || "Unknown" }} ({{ payment.fromUserId }})</td>
+          <td>{{ userMap[payment.toUserId] || "Unknown" }} ({{ payment.toUserId }})</td>
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
         </tr>  
@@ -46,8 +46,6 @@
 import { LOCAL_STORAGE, PaymentStatus } from '@/constants/constants';
 import { getPayments, getUsers } from '@/services/dataService';
 
-
-
 export default{
   name: "PaymentList",
   data(){
@@ -58,11 +56,11 @@ export default{
     }
   },
 
-
   methods:{
-    getUserName(userId) {
-      const user = this.users.find(user => user.id === userId);
-      return user ? user.name : "Unknown";
+    setPaymentDetailsInLocalStorage(paymentId){
+      const paymentDetails = JSON.stringify(this.payments.find(payment => payment.id === paymentId));
+      localStorage.setItem(LOCAL_STORAGE.SELECTED_PAYMENT, paymentDetails);
+      this.$router.push(`/payments/${paymentId}`);
     },
 
     getFilterdPayments() {
@@ -71,21 +69,21 @@ export default{
       }
       return this.payments.filter(payment => payment.status === this.selectedStatus);
     },
-
-    goToCreatePayment(){
-      this.$router.push('/payments/new');
-    },
-
-    viewPayment(paymentId){
-      const paymentDetails = JSON.stringify(this.payments.find(payment => payment.id === paymentId));
-      localStorage.setItem(LOCAL_STORAGE.SELECTED_PAYMENT, paymentDetails);
-      this.$router.push(`/payments/${paymentId}`);
-    }
   },
 
-  async mounted() {
-    this.payments = await getPayments()
+  computed: {
+    userMap() {
+      const map = {};
+      this.users.forEach(user => {
+        map[user.id] = user.name;
+      });
+      return map;
+    },
+  },
+
+  async beforeMount() {
     this.users = await getUsers();
+    this.payments = await getPayments()
   }
 }
 </script>
