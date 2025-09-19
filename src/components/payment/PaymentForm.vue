@@ -10,7 +10,7 @@
         <label for="user">UPI ID</label>
         <select id="user" v-model="form.toUserId">
           <option disabled value="">-- Select User --</option>
-          <option v-for="user in users" :key="user.id" :value="user.upiId">
+          <option v-for="user in users" :key="user.id" :value="user.id">
             {{ user.upiId }}
           </option>
         </select>
@@ -28,7 +28,7 @@
         <span class="error" v-if="errors.amount">{{ errors.amount }}</span>
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="status">Status</label>
         <select id="status" v-model="form.status">
           <option value="SUCCESS">Success</option>
@@ -36,7 +36,7 @@
           <option value="FAILED">Failed</option>
         </select>
         <span class="error" v-if="errors.status">{{ errors.status }}</span>
-      </div>
+      </div> -->
 
       <div class="form-actions">
         <button type="submit" class="save-btn" :disabled="isLoading">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { LOCAL_STORAGE } from '@/constants/constants'
+import { LOCAL_STORAGE, PAYMENT_STATUS } from '@/constants/constants'
 import { getUsers } from '@/services/dataService'
 import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/dataService'
 
@@ -92,7 +92,7 @@ export default {
         if (payment) {
           this.form.toUserId = payment.toUserId
           this.form.amount = payment.amount
-          this.form.status = payment.status
+          // this.form.status = payment.status
         }
       } catch (err) {
         console.error(err)
@@ -105,8 +105,8 @@ export default {
       let valid = true
       this.errors.toUserId = this.form.toUserId ? '' : 'User is required'
       this.errors.amount = this.form.amount > 0 ? '' : 'Amount must be greater than 0'
-      this.errors.status = this.form.status ? '' : 'Status is required'
-      if (this.errors.toUserId || this.errors.amount || this.errors.status) valid = false
+      // this.errors.status = this.form.status ? '' : 'Status is required'
+      if (this.errors.toUserId || this.errors.amount) valid = false
       return valid
     },
 
@@ -120,7 +120,7 @@ export default {
         } else {
           const allPayments = await getPayments()
           const maxId = allPayments.length ? Math.max(...allPayments.map(p => parseInt(p.id))) : 0
-          const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)).id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString() }
+          const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)).id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString(), status: PAYMENT_STATUS.PENDING }
           await createPayment(newPayment)
         }
         this.$router.push('/payments')

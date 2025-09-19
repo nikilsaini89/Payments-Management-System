@@ -23,8 +23,8 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>From User Name (User ID)</th>
-          <th>To User Name (User ID)</th>
+          <th>From User (Upi ID)</th>
+          <th>To User (Upi ID)</th>
           <th>Payment Status</th>
           <th>Amount</th>
           <th v-if="isAdmin">Actions</th>
@@ -33,8 +33,8 @@
       <tbody v-if="getFilterdPayments().length > 0">
         <tr v-for="(payment, index) in getFilterdPayments()" :key="payment.id" @click="setPaymentDetailsInLocalStorage(payment.id)" style="cursor: pointer;">
           <td>{{ index + 1 }}</td>
-          <td>{{ userMap[payment.fromUserId] || "Unknown" }} ({{ payment.fromUserId }})</td>
-          <td>{{ userMap[payment.toUserId] || "Unknown" }} ({{ payment.toUserId }})</td>
+          <td>{{ userMap[payment.fromUserId] || "Unknown" }} ({{ userUpiMap[payment.fromUserId] }})</td>
+          <td>{{ userMap[payment.toUserId] || "Unknown" }} ({{ userUpiMap[payment.toUserId] }})</td>
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
           <td v-if="isAdmin">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { LOCAL_STORAGE, PaymentStatus, ROLE_TYPE } from '@/constants/constants';
+import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants';
 import { getPayments, getUsers } from '@/services/dataService';
 
 export default{
@@ -61,7 +61,7 @@ export default{
     return{
       payments : [],
       users: [],
-      selectedStatus: PaymentStatus.ALL,
+      selectedStatus: PAYMENT_STATUS.ALL,
       isUser: false,
     }
   },
@@ -81,7 +81,7 @@ export default{
         result = result.filter(payment => payment.fromUserId === loggedInUser.id);
       }
 
-      if (this.selectedStatus !== PaymentStatus.ALL) {
+      if (this.selectedStatus !== PAYMENT_STATUS.ALL) {
         result = result.filter(payment => payment.status === this.selectedStatus);
       }
       return result;
@@ -99,6 +99,14 @@ export default{
       const map = {};
       this.users.forEach(user => {
         map[user.id] = user.name;
+      });
+      return map;
+    },
+
+    userUpiMap() {
+      const map = {};
+      this.users.forEach(user => {
+        map[user.id] = user.upiId;
       });
       return map;
     },

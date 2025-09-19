@@ -44,7 +44,7 @@
 
 <script>
 import { getUsers, getPayments } from '../services/dataService'
-import { PaymentStatus } from '@/constants/constants'
+import { PAYMENT_STATUS } from '@/constants/constants'
 
 export default {
   name: "DashboardComponent",
@@ -66,13 +66,13 @@ export default {
       return this.payments.length
     },
     successPayments() {
-      return this.payments.filter(p => p.status === PaymentStatus.SUCCESS).length
+      return this.payments.filter(p => p.status === PAYMENT_STATUS.SUCCESS).length
     },
     pendingPayments() {
-      return this.payments.filter(p => p.status === PaymentStatus.PENDING).length
+      return this.payments.filter(p => p.status === PAYMENT_STATUS.PENDING).length
     },
     failedPayments() {
-      return this.payments.filter(p => p.status === PaymentStatus.FAILED).length
+      return this.payments.filter(p => p.status === PAYMENT_STATUS.FAILED).length
     }
   }
 }
