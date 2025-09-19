@@ -2,7 +2,7 @@
   <div class="dashboard">
 
     <header class="dashboard-header">
-      <h2 class="payment-header">Welcome {{ loggedInUser.name }} <span class="font-weight-200">({{ loggedInUser.role }})</span></h2>
+      <h2 class="payment-header">Welcome {{ loggedInUser?.name }} <span class="font-weight-200">({{ loggedInUser?.role }})</span></h2>
       <p class="subtitle">Overview of <span v-if="isAdmin">users and</span> payments</p>
     </header>
 
@@ -65,38 +65,38 @@ export default {
   },
   computed: {
     isAdmin() {
-      const user = localStorage.getItem(LOCAL_STORAGE.USER_ROLE)
-      return user && user.role === ROLE_TYPE.ADMIN;
+      const userRole = localStorage.getItem(LOCAL_STORAGE.USER_ROLE)
+      return userRole === ROLE_TYPE.ADMIN;
     },
     totalUsers() {
-      return this.users.length
+      return this.users?.length
     },
     totalPayments() {
       if(this.isAdmin){
         return this.payments.length
       }
-      return this.payments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
+      return this.payments.filter(payment => payment.fromUserId === this.loggedInUser?.id).length;
     },
     successPayments() {
       const successPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.SUCCESS);
       if(this.isAdmin){
         return successPayments.length
       }
-      return successPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
+      return successPayments.filter(payment => payment.fromUserId === this.loggedInUser?.id).length;
     },
     pendingPayments() {
       const pendingPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.PENDING);
       if(this.isAdmin){
         return pendingPayments.length
       }
-      return pendingPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
+      return pendingPayments.filter(payment => payment.fromUserId === this.loggedInUser?.id).length;
     },
     failedPayments() {
       const failedPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.FAILED);
       if(this.isAdmin){
         return failedPayments.length
       }
-      return failedPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
+      return failedPayments.filter(payment => payment.fromUserId === this.loggedInUser?.id).length;
     }
   }
 }
