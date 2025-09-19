@@ -39,16 +39,16 @@
         <span class="error" v-if="errors.upiId">{{ errors.upiId }}</span>
       </div>
 
-      <!-- Phone -->
+      <!-- password -->
       <div class="form-group">
-        <label for="phone">Phone Number</label>
+        <label for="password">Password</label>
         <input
-          id="phone"
+          id="password"
           type="text"
-          v-model="form.phone"
-          placeholder="Enter Phone Number"
+          v-model="form.password"
+          placeholder="Enter Password"
         />
-        <span class="error" v-if="errors.phone">{{ errors.phone }}</span>
+        <span class="error" v-if="errors.password">{{ errors.password }}</span>
       </div>
 
       <!-- Buttons -->
@@ -75,13 +75,13 @@ export default {
         name: '',
         email: '',
         upiId: '',
-        phone: '',
+        password: '',
       },
       errors: {
         name: '',
         email: '',
         upiId: '',
-        phone: '',  
+        password: '',  
       },
       isLoading: false
     }
@@ -98,8 +98,8 @@ export default {
       this.errors.name = this.form.name ? '' : 'Name is required'
       this.errors.email = /\S+@\S+\.\S+/.test(this.form.email) ? '' : 'Invalid email'
       this.errors.upiId = this.form.upiId ? '' : 'UPI Id is required'
-      this.errors.phone = /^\d{10}$/.test(this.form.phone) ? '' : 'Invalid phone number'
-      if (this.errors.name || this.errors.email || this.errors.upiId || this.errors.phone) valid = false
+      this.errors.password = this.form.password ? '' : 'Invalid password'
+      if (this.errors.name || this.errors.email || this.errors.upiId || this.errors.password) valid = false
       return valid
     },
     

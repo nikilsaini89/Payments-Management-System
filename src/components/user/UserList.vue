@@ -11,7 +11,6 @@
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Phone</th>
           <th>UPI Id</th>
         </tr>
       </thead>
@@ -20,7 +19,6 @@
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.phone }}</td>
           <td>{{ user.upiId }}</td>
         </tr>
       </tbody>

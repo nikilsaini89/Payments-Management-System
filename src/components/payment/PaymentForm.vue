@@ -7,14 +7,14 @@
 
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label for="user">User</label>
-        <select id="user" v-model="form.userId">
+        <label for="user">UPI ID</label>
+        <select id="user" v-model="form.toUserId">
           <option disabled value="">-- Select User --</option>
-          <option v-for="user in users" :key="user.id" :value="user.id">
-            {{ user.name }}
+          <option v-for="user in users" :key="user.id" :value="user.upiId">
+            {{ user.upiId }}
           </option>
         </select>
-        <span class="error" v-if="errors.userId">{{ errors.userId }}</span>
+        <span class="error" v-if="errors.toUserId">{{ errors.toUserId }}</span>
       </div>
 
       <div class="form-group">
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { LOCAL_STORAGE } from '@/constants/constants'
 import { getUsers } from '@/services/dataService'
 import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/dataService'
 
@@ -59,19 +60,20 @@ export default {
   data() {
     return {
       form: {
-        userId: '',
+        toUserId: '',
         amount: '',
         status: 'PENDING',
       },
       users: [],
       errors: {
-        userId: '',
+        toUserId: '',
         amount: '',
         status: '',
       },
       isLoading: false,
     }
   },
+
   computed: {
     paymentId() {
       return this.$route.params.id
@@ -80,6 +82,7 @@ export default {
       return !!this.paymentId
     }
   },
+
   async mounted() {
     this.users = await getUsers()
 
@@ -87,7 +90,7 @@ export default {
       try {
         const payment = await getPaymentById(this.paymentId)
         if (payment) {
-          this.form.userId = payment.userId
+          this.form.toUserId = payment.toUserId
           this.form.amount = payment.amount
           this.form.status = payment.status
         }
@@ -100,10 +103,10 @@ export default {
   methods: {
     validate() {
       let valid = true
-      this.errors.userId = this.form.userId ? '' : 'User is required'
+      this.errors.toUserId = this.form.toUserId ? '' : 'User is required'
       this.errors.amount = this.form.amount > 0 ? '' : 'Amount must be greater than 0'
       this.errors.status = this.form.status ? '' : 'Status is required'
-      if (this.errors.userId || this.errors.amount || this.errors.status) valid = false
+      if (this.errors.toUserId || this.errors.amount || this.errors.status) valid = false
       return valid
     },
 
@@ -117,7 +120,7 @@ export default {
         } else {
           const allPayments = await getPayments()
           const maxId = allPayments.length ? Math.max(...allPayments.map(p => parseInt(p.id))) : 0
-          const newPayment = { id: String(maxId + 1), ...this.form }
+          const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)).id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString() }
           await createPayment(newPayment)
         }
         this.$router.push('/payments')
@@ -131,6 +134,12 @@ export default {
 
     cancel() {
       this.$router.push('/payments')
+    },
+
+    generateTxnId() {
+      const prefix = "TXN";
+      const randomNum = Math.floor(100000 + Math.random() * 900000); 
+      return `${prefix}${randomNum}`;
     }
   }
 }
