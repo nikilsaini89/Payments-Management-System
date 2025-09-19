@@ -8,10 +8,10 @@
       <router-link
         to="/"
         class="nav-link"
-        :class="{ active : isActive('/') }"
+        :class="{ active : isActive('/dashboard') }"
         >Dashboard</router-link>
 
-      <router-link
+      <router-link v-if="isAdmin"
       to="/users"
       class="nav-link"
       :class="{ active : isActive('/users') }"
@@ -26,8 +26,28 @@
 </template>
 
 <script>
+import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
+import { authStore } from '@/store/auth';
+
+
 export default {
   name: 'NavbarComponent',
+
+  computed:{
+      isAdmin(){
+        return this.store.getUserRole === ROLE_TYPE.ADMIN
+      }
+  }, 
+
+  mounted() {
+    this.updateUserRole();
+  },
+
+  setup() {
+    const store = authStore()
+    return { store }
+  },
+
   methods: {
     isActive(path) {
         if (path === '/') {
@@ -35,8 +55,15 @@ export default {
         } else {
             return this.$route.path.startsWith(path)
         }
-    }
-  }
+    },
+
+    updateUserRole() {
+      const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
+      if (role) {
+        this.store.setUserRole(role);
+      }
+    },
+  },
 }
 </script>
 

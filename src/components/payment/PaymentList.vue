@@ -13,7 +13,7 @@
             <option value="FAILED">Failed</option>
           </select>
         </div>
-        <div>        
+        <div v-if="isUser">        
           <button class="create-btn" @click="this.$router.push('/payments/new')">+ Create Payment</button>
         </div>
       </div>
@@ -27,23 +27,32 @@
           <th>To User Name (User ID)</th>
           <th>Payment Status</th>
           <th>Amount</th>
+          <th v-if="isAdmin">Actions</th>
         </tr> 
       </thead>
-      <tbody v-if="payments.length">
+      <tbody v-if="getFilterdPayments().length > 0">
         <tr v-for="(payment, index) in getFilterdPayments()" :key="payment.id" @click="setPaymentDetailsInLocalStorage(payment.id)" style="cursor: pointer;">
           <td>{{ index + 1 }}</td>
           <td>{{ userMap[payment.fromUserId] || "Unknown" }} ({{ payment.fromUserId }})</td>
           <td>{{ userMap[payment.toUserId] || "Unknown" }} ({{ payment.toUserId }})</td>
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
+          <td v-if="isAdmin">
+            <button @click="navigateToEditPayment($event)">Update Payment</button>
+          </td>
         </tr>  
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 1rem;">No Payments to show!</td>
+        </tr>
       </tbody>
   </table>
   </div>
 </template>
 
 <script>
-import { LOCAL_STORAGE, PaymentStatus } from '@/constants/constants';
+import { LOCAL_STORAGE, PaymentStatus, ROLE_TYPE } from '@/constants/constants';
 import { getPayments, getUsers } from '@/services/dataService';
 
 export default{
@@ -52,7 +61,8 @@ export default{
     return{
       payments : [],
       users: [],
-      selectedStatus: PaymentStatus.ALL
+      selectedStatus: PaymentStatus.ALL,
+      isUser: false,
     }
   },
 
@@ -64,10 +74,23 @@ export default{
     },
 
     getFilterdPayments() {
-      if (this.selectedStatus === PaymentStatus.ALL) {
-        return this.payments;
+      let result = this.payments;
+
+      if (this.isUser) {
+        const loggedInUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER));
+        result = result.filter(payment => payment.fromUserId === loggedInUser.id);
       }
-      return this.payments.filter(payment => payment.status === this.selectedStatus);
+
+      if (this.selectedStatus !== PaymentStatus.ALL) {
+        result = result.filter(payment => payment.status === this.selectedStatus);
+      }
+      return result;
+    },
+
+    navigateToEditPayment($event) {
+      $event.stopPropagation();
+      const paymentId = JSON.parse(localStorage.getItem(LOCAL_STORAGE.SELECTED_PAYMENT)).id;
+      this.$router.push(`/payments/${paymentId}/edit`);
     },
   },
 
@@ -79,11 +102,17 @@ export default{
       });
       return map;
     },
+
+    isAdmin(){
+      return localStorage.getItem(LOCAL_STORAGE.USER_ROLE) === ROLE_TYPE.ADMIN
+    }
   },
 
-  async beforeMount() {
+  async mounted() {
+    this.isUser = localStorage.getItem(LOCAL_STORAGE.USER_ROLE) === ROLE_TYPE.USER;
     this.users = await getUsers();
     this.payments = await getPayments()
+    console.log("pay,emts",this.payments);
   }
 }
 </script>
