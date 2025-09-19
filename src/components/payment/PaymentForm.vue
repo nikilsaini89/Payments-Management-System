@@ -28,15 +28,6 @@
         <span class="error" v-if="errors.amount">{{ errors.amount }}</span>
       </div>
 
-      <!-- <div class="form-group">
-        <label for="status">Status</label>
-        <select id="status" v-model="form.status">
-          <option value="SUCCESS">Success</option>
-          <option value="PENDING">Pending</option>
-          <option value="FAILED">Failed</option>
-        </select>
-        <span class="error" v-if="errors.status">{{ errors.status }}</span>
-      </div> -->
 
       <div class="form-actions">
         <button type="submit" class="save-btn" :disabled="isLoading">
@@ -92,7 +83,6 @@ export default {
         if (payment) {
           this.form.toUserId = payment.toUserId
           this.form.amount = payment.amount
-          // this.form.status = payment.status
         }
       } catch (err) {
         console.error(err)
@@ -105,7 +95,6 @@ export default {
       let valid = true
       this.errors.toUserId = this.form.toUserId ? '' : 'User is required'
       this.errors.amount = this.form.amount > 0 ? '' : 'Amount must be greater than 0'
-      // this.errors.status = this.form.status ? '' : 'Status is required'
       if (this.errors.toUserId || this.errors.amount) valid = false
       return valid
     },
