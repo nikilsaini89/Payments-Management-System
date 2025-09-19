@@ -16,3 +16,11 @@ export const ROLE_TYPE = {
     ADMIN: 'ADMIN',
     USER: 'USER'    
 }
+
+export const ACTIONS = {
+    LOGOUT: 'logout'
+}
+
+export const EVENTS = {
+    CLICK: 'click'
+}
