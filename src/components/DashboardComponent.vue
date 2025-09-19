@@ -2,12 +2,12 @@
   <div class="dashboard">
 
     <header class="dashboard-header">
-      <h1 class="payment-header">Dashboard</h1>
-      <p class="subtitle">Overview of users and payments</p>
+      <h2 class="payment-header">Welcome {{ loggedInUser.name }} <span class="font-weight-200">({{ loggedInUser.role }})</span></h2>
+      <p class="subtitle">Overview of <span v-if="isAdmin">users and</span> payments</p>
     </header>
 
     <section class="stats-cards">
-      <div class="card card-blue">
+      <div class="card card-blue" v-if="isAdmin">
         <h2>Total Users</h2>
         <p class="count">{{ totalUsers }}</p>
       </div>
@@ -30,7 +30,7 @@
     </section>
 
     <section class="quick-actions">
-      <div class="action-card" @click="$router.push('/users')">
+      <div v-if="isAdmin" class="action-card" @click="$router.push('/users')">
         <span class="icon">👤</span>
         <h2>Manage Users</h2>
       </div>
@@ -44,35 +44,59 @@
 
 <script>
 import { getUsers, getPayments } from '../services/dataService'
-import { PAYMENT_STATUS } from '@/constants/constants'
+import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
 
 export default {
   name: "DashboardComponent",
   data() {
     return {
       users: [],
-      payments: []
+      payments: [],
+      loggedInUser: null
     }
+  },
+  beforeMount() {
+    const user = localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)
+    this.loggedInUser = user ? JSON.parse(user) : null;
   },
   async mounted() {
     this.users = await getUsers()
     this.payments = await getPayments()
   },
   computed: {
+    isAdmin() {
+      const user = localStorage.getItem(LOCAL_STORAGE.USER_ROLE)
+      return user && user.role === ROLE_TYPE.ADMIN;
+    },
     totalUsers() {
       return this.users.length
     },
     totalPayments() {
-      return this.payments.length
+      if(this.isAdmin){
+        return this.payments.length
+      }
+      return this.payments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
     },
     successPayments() {
-      return this.payments.filter(p => p.status === PAYMENT_STATUS.SUCCESS).length
+      const successPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.SUCCESS);
+      if(this.isAdmin){
+        return successPayments.length
+      }
+      return successPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
     },
     pendingPayments() {
-      return this.payments.filter(p => p.status === PAYMENT_STATUS.PENDING).length
+      const pendingPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.PENDING);
+      if(this.isAdmin){
+        return pendingPayments.length
+      }
+      return pendingPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
     },
     failedPayments() {
-      return this.payments.filter(p => p.status === PAYMENT_STATUS.FAILED).length
+      const failedPayments = this.payments.filter(payment => payment.status === PAYMENT_STATUS.FAILED);
+      if(this.isAdmin){
+        return failedPayments.length
+      }
+      return failedPayments.filter(payment => payment.fromUserId === this.loggedInUser.id).length;
     }
   }
 }
@@ -87,6 +111,10 @@ export default {
 
 .payment-header{
   margin: 0px;
+}
+
+.font-weight-200{
+  font-weight: 400;
 }
 
 .dashboard {

@@ -6,12 +6,12 @@
       <span class="value">{{ paymentDetails.id }}</span>
     </div>
     <div class="detail-row">
-      <span class="label">From User ID:</span>
-      <span class="value">{{ paymentDetails.fromUserId }}</span>
+      <span class="label">From :</span>
+      <span class="value">{{ userUpiMap[paymentDetails.fromUserId] }}</span>
     </div>
     <div class="detail-row">
-      <span class="label">To User ID:</span>
-      <span class="value">{{ paymentDetails.toUserId }}</span>
+      <span class="label">To:</span>
+      <span class="value">{{ userUpiMap[paymentDetails.toUserId] }}</span>
     </div>
     <div class="detail-row">
       <span class="label">Amount:</span>
@@ -44,14 +44,31 @@
 
 <script>
 import { LOCAL_STORAGE } from '@/constants/constants';
+import { getUsers } from '@/services/dataService';
 
 export default {
   name: "PaymentDetail",
 
   data() {
     return {
-      paymentDetails: null
+      paymentDetails: null,
+      users: [],
+      userMap: {},
     }
+  },
+
+  mounted: async function() {
+    this.users = await getUsers();
+  },
+
+  computed: {
+    userUpiMap() {
+      const map = {};
+      this.users.forEach(user => {
+        map[user.id] = user.upiId;
+      });
+      return map;
+    },
   },
 
   created() {
