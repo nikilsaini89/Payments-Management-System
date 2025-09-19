@@ -38,7 +38,7 @@
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
           <td v-if="isAdmin">
-            <button class="update-btn" @click="navigateToEditPayment($event)"> <span>🖊️</span> Update Payment</button>
+            <button class="update-btn" @click="navigateToEditPayment($event, payment.id)"> <span>🖊️</span> Update Payment</button>
           </td>
         </tr>  
       </tbody>
@@ -87,9 +87,8 @@ export default{
       return result;
     },
 
-    navigateToEditPayment($event) {
+    navigateToEditPayment($event, paymentId) {
       $event.stopPropagation();
-      const paymentId = JSON.parse(localStorage.getItem(LOCAL_STORAGE.SELECTED_PAYMENT)).id;
       this.$router.push(`/payments/${paymentId}/edit`);
     },
   },
@@ -120,7 +119,6 @@ export default{
     this.isUser = localStorage.getItem(LOCAL_STORAGE.USER_ROLE) === ROLE_TYPE.USER;
     this.users = await getUsers();
     this.payments = await getPayments()
-    console.log("pay,emts",this.payments);
   }
 }
 </script>

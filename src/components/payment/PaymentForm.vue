@@ -6,9 +6,14 @@
     <h1>{{ isEditMode ? 'Edit Payment' : 'Add New Payment' }}</h1>
 
     <form @submit.prevent="handleSubmit">
+      <div class="form-group" v-if="!isUser">
+        <label for="user">From UPI ID</label>
+        <input type="text" :value="userUpiMap[form.fromUserId]" disabled/>
+      </div>
       <div class="form-group">
-        <label for="user">UPI ID</label>
-        <select id="user" v-model="form.toUserId">
+        <label for="user">To UPI ID</label>
+        <input type="text" :value="userUpiMap[form.toUserId]" :disabled="!isUser" v-if="!isUser"/>
+        <select id="user" v-model="form.toUserId" v-if="isUser">
           <option disabled value="">-- Select User --</option>
           <option v-for="user in users" :key="user.id" :value="user.id">
             {{ user.upiId }}
@@ -24,8 +29,19 @@
           type="number"
           v-model="form.amount"
           placeholder="Enter amount"
+          :disabled="!isUser"
         />
         <span class="error" v-if="errors.amount">{{ errors.amount }}</span>
+      </div>
+
+      <div class="form-group" v-if="!isUser">
+        <label for="status">Status</label>
+        <select id="status" v-model="form.status">
+          <option value="SUCCESS">Success</option>
+          <option value="PENDING">Pending</option>
+          <option value="FAILED">Failed</option>
+        </select>
+        <span class="error" v-if="errors.status">{{ errors.status }}</span>
       </div>
 
 
@@ -42,7 +58,7 @@
 </template>
 
 <script>
-import { LOCAL_STORAGE, PAYMENT_STATUS } from '@/constants/constants'
+import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
 import { getUsers } from '@/services/dataService'
 import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/dataService'
 
@@ -51,6 +67,7 @@ export default {
   data() {
     return {
       form: {
+        fromUserId: '',
         toUserId: '',
         amount: '',
         status: 'PENDING',
@@ -71,6 +88,22 @@ export default {
     },
     isEditMode() {
       return !!this.paymentId
+    },
+    isUser() {
+      const userRole = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
+      return userRole && userRole === ROLE_TYPE.USER
+    },
+
+    loggedInUser(){
+      return JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER));
+    },
+
+    userUpiMap() {
+      const map = {}
+      this.users.forEach(user => {
+        map[user.id] = user.upiId
+      })
+      return map
     }
   },
 
@@ -81,8 +114,10 @@ export default {
       try {
         const payment = await getPaymentById(this.paymentId)
         if (payment) {
+          this.form.fromUserId = payment.fromUserId
           this.form.toUserId = payment.toUserId
           this.form.amount = payment.amount
+          this.form.status = payment.status
         }
       } catch (err) {
         console.error(err)
@@ -109,7 +144,7 @@ export default {
         } else {
           const allPayments = await getPayments()
           const maxId = allPayments.length ? Math.max(...allPayments.map(p => parseInt(p.id))) : 0
-          const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)).id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString(), status: PAYMENT_STATUS.PENDING }
+          const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: this.loggedInUser.id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString(), status: PAYMENT_STATUS.PENDING }
           await createPayment(newPayment)
         }
         this.$router.push('/payments')

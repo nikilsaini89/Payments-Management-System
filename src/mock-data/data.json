@@ -144,6 +144,20 @@
       "email": "sd33@s.com",
       "upiId": "sdj33434@",
       "password": "34t4rgfb"
+    },
+    {
+      "id": 15,
+      "name": "Abhay",
+      "email": "abhay@mail.com",
+      "upiId": "abhay@upi",
+      "password": "abhay123"
+    },
+    {
+      "id": 16,
+      "name": "ew",
+      "email": "ee4@dd.co",
+      "upiId": "24r",
+      "password": "234ewd"
     }
   ],
   "payments": [
@@ -168,14 +182,11 @@
       "timestamp": "2025-08-02T14:10:00Z"
     },
     {
-      "id": "203",
       "fromUserId": 3,
       "toUserId": 4,
       "amount": 2000,
-      "status": "FAILED",
-      "method": "UPI",
-      "referenceId": "TXN203003",
-      "timestamp": "2025-08-03T09:45:00Z"
+      "status": "SUCCESS",
+      "id": "203"
     },
     {
       "id": "204",
@@ -278,14 +289,11 @@
       "timestamp": "2025-08-13T08:45:00Z"
     },
     {
-      "id": "214",
+      "fromUserId": "2",
       "toUserId": "6",
       "amount": 34,
-      "status": "PENDING",
-      "fromUserId": "2",
-      "method": "UPI",
-      "referenceId": "TXN665510",
-      "timestamp": "2025-09-19T04:22:32.454Z"
+      "status": "SUCCESS",
+      "id": "214"
     },
     {
       "id": "215",
@@ -308,24 +316,28 @@
       "timestamp": "2025-09-19T04:31:00.539Z"
     },
     {
-      "id": "217",
+      "fromUserId": "2",
       "toUserId": "8",
       "amount": 54,
-      "status": "PENDING",
-      "fromUserId": "2",
-      "method": "UPI",
-      "referenceId": "TXN230607",
-      "timestamp": "2025-09-19T04:55:38.224Z"
+      "status": "SUCCESS",
+      "id": "217"
     },
     {
-      "id": "218",
+      "fromUserId": "2",
       "toUserId": "8",
       "amount": 80000,
-      "status": "PENDING",
+      "status": "SUCCESS",
+      "id": "218"
+    },
+    {
+      "id": "219",
       "fromUserId": "2",
+      "toUserId": "4",
+      "amount": 7,
+      "status": "PENDING",
       "method": "UPI",
-      "referenceId": "TXN646436",
-      "timestamp": "2025-09-19T06:03:25.042Z"
+      "referenceId": "TXN381550",
+      "timestamp": "2025-09-19T07:11:12.557Z"
     }
   ]
 }
