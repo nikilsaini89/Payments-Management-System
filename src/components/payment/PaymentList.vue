@@ -38,7 +38,7 @@
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
           <td v-if="isAdmin">
-            <button @click="navigateToEditPayment($event)">Update Payment</button>
+            <button class="update-btn" @click="navigateToEditPayment($event)"> <span>🖊️</span> Update Payment</button>
           </td>
         </tr>  
       </tbody>
@@ -201,4 +201,18 @@ export default{
   background-color: #2563eb;
 }
 
+.update-btn {
+  background-color: #3b82f6;
+  border: none;
+  color: rgb(15, 11, 11);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s;
+}
+
+.update-btn:hover {
+  background-color: #2563eb;
+}
 </style>
