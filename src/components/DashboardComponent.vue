@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { authStore } from '@/store/auth'
 import { getUsers, getPayments } from '../services/dataService'
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
 
@@ -52,7 +53,8 @@ export default {
     return {
       users: [],
       payments: [],
-      loggedInUser: null
+      loggedInUser: null,
+      store: authStore()
     }
   },
   beforeMount() {
@@ -62,6 +64,14 @@ export default {
   async mounted() {
     this.users = await getUsers()
     this.payments = await getPayments()
+    
+    const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
+    const isLoggedIn = localStorage.getItem(LOCAL_STORAGE.IS_LOGGED_IN);
+
+    this.store.setIsLoggedIn(isLoggedIn);
+    if (role) {
+      this.store.setUserRole(role);
+    }
   },
   computed: {
     isAdmin() {

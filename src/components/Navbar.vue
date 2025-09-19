@@ -90,10 +90,6 @@ export default {
   },
 
   mounted() {
-    const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
-    if (role) {
-      this.store.setUserRole(role);
-    }
     document.addEventListener(EVENTS.CLICK, this.handleClickOutside);
   },
 

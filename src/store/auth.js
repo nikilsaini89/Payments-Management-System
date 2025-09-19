@@ -1,3 +1,4 @@
+import { set } from "core-js/core/dict";
 import { defineStore } from "pinia";
 
 export const authStore = defineStore('authStore', {
@@ -5,12 +6,17 @@ export const authStore = defineStore('authStore', {
     state: () => {
         return {
             userRole: "",
+            isLoggedIn: ""
         }
     },
 
     actions: {
         setUserRole(role){
             this.userRole = role;
+        },
+        
+        setIsLoggedIn(status){
+            this.isLoggedIn = status;
         }
     },
 
@@ -18,5 +24,8 @@ export const authStore = defineStore('authStore', {
         getUserRole(state) {
             return state.userRole;
         },
+        getIsLoggedIn(state) {
+            return state.isLoggedIn;
+        }
     },
 })
