@@ -44,7 +44,7 @@
 
 <script>
 import { LOCAL_STORAGE } from '@/constants/constants';
-import { getUsers } from '@/services/dataService';
+import { getUsers } from '@/services/data-service';
 
 export default {
   name: "PaymentDetail",

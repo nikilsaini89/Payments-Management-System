@@ -1,4 +1,3 @@
-import { set } from "core-js/core/dict";
 import { defineStore } from "pinia";
 
 export const authStore = defineStore('authStore', {

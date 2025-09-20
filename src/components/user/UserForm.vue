@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { getUsers, createUser } from '../../services/dataService'
+import { getUsers, createUser } from '../../services/data-service'
 
 export default {
   name: 'UserForm',

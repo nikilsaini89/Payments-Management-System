@@ -53,7 +53,7 @@
 
 <script>
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants';
-import { getPayments, getUsers } from '@/services/dataService';
+import { getPayments, getUsers } from '@/services/data-service';
 
 export default{
   name: "PaymentList",

@@ -44,7 +44,7 @@
 
 <script>
 import { authStore } from '@/store/auth'
-import { getUsers, getPayments } from '../services/dataService'
+import { getUsers, getPayments } from '../services/data-service'
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
 
 export default {

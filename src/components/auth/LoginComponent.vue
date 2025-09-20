@@ -18,7 +18,7 @@
 
 <script>
 import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
-import { getUsers } from '@/services/dataService';
+import { getUsers } from '@/services/data-service';
 import { authStore } from '@/store/auth';
 
 export default {

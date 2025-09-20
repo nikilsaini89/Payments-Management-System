@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getUsers } from '@/services/dataService'
+import { getUsers } from '@/services/data-service'
 
 export default {
   name: "UserList",

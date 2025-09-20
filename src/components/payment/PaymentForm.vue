@@ -59,8 +59,8 @@
 
 <script>
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
-import { getUsers } from '@/services/dataService'
-import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/dataService'
+import { getUsers } from '@/services/data-service'
+import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/data-service'
 
 export default {
   name: 'PaymentForm',
