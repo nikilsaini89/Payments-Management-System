@@ -2,13 +2,13 @@
   "users": [
     {
       "id": "2",
-      "name": "Isha Verma",
-      "email": "isha.verma@mail.com",
-      "upiId": "isha@upi",
+      "name": "Sumit Negi",
+      "email": "sumit.negi@gmail.com",
+      "upiId": "sumit@upi",
       "phone": "9876501234",
       "kycStatus": "VERIFIED",
       "createdAt": "2025-02-14T09:21:00Z",
-      "password": "isha123",
+      "password": "sumit123",
       "role": "USER"
     },
     {
@@ -118,7 +118,7 @@
       "phone": "9728183200",
       "kycStatus": "VERIFIED",
       "password": "nikil123",
-      "role": "USER"
+      "role": "ADMIN"
     },
     {
       "id": "14",
@@ -136,16 +136,6 @@
     }
   ],
   "payments": [
-    {
-      "id": "201",
-      "fromUserId": 1,
-      "toUserId": 2,
-      "amount": 1200,
-      "status": "SUCCESS",
-      "method": "UPI",
-      "referenceId": "TXN201001",
-      "timestamp": "2025-08-01T12:30:00Z"
-    },
     {
       "id": "202",
       "fromUserId": 2,

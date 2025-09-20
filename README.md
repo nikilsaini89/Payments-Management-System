@@ -4,59 +4,55 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![npm version](https://img.shields.io/npm/v/npm.svg?style=for-the-badge)](https://www.npmjs.com/get-npm)
 
-A **Payment Management System** built with **Vue 3**, designed for both Admins and Users to manage payments in a fintech-like environment. The app provides a **dashboard**, **role-based features**, and interactive tables for managing users and payments.
+A **Payment Management System** built with **Vue 3** for Admins and Users. The app provides a dashboard, role-based features, and interactive tables for managing users and payments in a fintech environment.
 
 ---
 
 ## Table of Contents
 
--   [Overview](#overview)
--   [Features](#features)
--   [Tech Stack](#tech-stack)
--   [Getting Started](#getting-started)
-    -   [Prerequisites](#prerequisites)
-    -   [Installation](#installation)
--   [Usage](#usage)
--   [Data Management](#data-management)
--   [Contributing](#contributing)
--   [License](#license)
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Data Management](#data-management)
+- [License](#license)
 
 ## Overview
 
-This application simulates a payment management environment with two distinct user roles: **Admin** and **User**. It features a central dashboard that provides a high-level overview of key metrics, such as total users, total payments, and the status distribution of payments.
+This application simulates a payment management environment with two distinct user roles: **Admin** and **User**. It features a central dashboard for a high-level overview of key metrics, such as total users, total payments, and payment status distribution.
 
 ## Features
 
--   **Role-Based Access Control**: Separate views and permissions for Admins and regular Users.
+-   **Role-Based Access**: Separate views and permissions for Admins and Users.
 -   **Admin Dashboard**:
-    -   View a complete list of all users and their details (Name, Email, UPI ID, Phone, KYC Status).
-    -   View a comprehensive list of all payments within the system.
-    -   Update the status of any payment (from `PENDING` to `SUCCESS` or `FAILED`).
+    -   View all users and their details.
+    -   View all payments in the system.
+    -   Update payment status (`PENDING` → `SUCCESS` / `FAILED`).
 -   **User Dashboard**:
-    -   Initiate new payments to other registered users.
-    -   View a personalized history of all payments sent or received.
--   **Interactive Dashboard Cards**: At-a-glance view of total users, total payments, and counts for `SUCCESS`, `PENDING`, and `FAILED` payments.
--   **Dynamic Filtering**: Both Admins and Users can filter the payments table by status (`ALL`, `PENDING`, `SUCCESS`, `FAILED`).
+    -   Create new payments to other users.
+    -   View personal transaction history (sent or received).
+-   **Dynamic Filtering**: Filter payments table by status (`ALL`, `PENDING`, `SUCCESS`, `FAILED`).
+-   **Dashboard Cards**: At-a-glance view of total users, payments, and status counts.
 
 ## Tech Stack
 
 -   **Frontend**: Vue 3 (Composition API)
 -   **State Management**: Pinia
--   **Data Management**: Json Server
 -   **Routing**: Vue Router
+-   **Mock API**: Json Server
 -   **Styling**: CSS
 
 ## Getting Started
 
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+Follow these instructions to get the project running on your local machine.
 
 ### Prerequisites
 
-Make sure you have Node.js and npm installed on your system.
--   **Node.js** (v16 or higher recommended)
+-   **Node.js** (v16 or higher)
 -   **npm** (comes with Node.js)
 
-You can check your installation with:
+Verify your installation:
 ```bash
 node -v
 npm -v
@@ -82,7 +78,15 @@ npm -v
     npm install
     ```
 
-4.  **Start the development server:**
+4.  **Start the JSON server:**
+    This will serve your users and payments data at `http://localhost:3000`.
+
+    ```bash
+    npx json-server --watch src/mock-data/data.json --port 3000
+
+    ```
+
+5.  **Start the development server:**
     The application will be available at `http://localhost:8080`.
 
     ```bash
