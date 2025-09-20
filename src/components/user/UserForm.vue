@@ -3,7 +3,6 @@
     <h1>Add New User</h1>
 
     <form @submit.prevent="handleSubmit">
-      <!-- Name -->
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -15,7 +14,6 @@
         <span class="error" v-if="errors.name">{{ errors.name }}</span>
       </div>
 
-      <!-- Email -->
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -27,7 +25,6 @@
         <span class="error" v-if="errors.email">{{ errors.email }}</span>
       </div>
 
-      <!-- UPI -->
       <div class="form-group">
         <label for="upiId">UPI Id</label>
         <input
@@ -39,7 +36,6 @@
         <span class="error" v-if="errors.upiId">{{ errors.upiId }}</span>
       </div>
 
-      <!-- password -->
       <div class="form-group">
         <label for="password">Password</label>
         <input
@@ -51,7 +47,6 @@
         <span class="error" v-if="errors.password">{{ errors.password }}</span>
       </div>
 
-      <!-- Buttons -->
       <div class="form-actions">
         <button type="submit" class="save-btn" :disabled="isLoading">
           Create
