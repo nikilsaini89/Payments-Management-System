@@ -2,12 +2,12 @@ import { shallowMount } from '@vue/test-utils'
 import UserForm from '@/components/user/UserForm.vue'
 import flushPromises from 'flush-promises'
 
-jest.mock('@/services/data-service', () => ({
+jest.mock('@/services/user-service', () => ({
   getUsers: jest.fn(() => Promise.resolve([{ id: 1 }])),
   createUser: jest.fn(() => Promise.resolve())
 }))
 
-import { getUsers, createUser } from '@/services/data-service'
+import { getUsers, createUser } from '@/services/user-service'
 
 describe('UserForm.vue', () => {
   let mockRouter

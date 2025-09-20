@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { getUsers, deleteUserById } from '@/services/data-service'
+import { getUsers, deleteUserById } from '@/services/user-service'
 import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants'
 
 export default {

@@ -2,14 +2,17 @@ import PaymentList from "@/components/payment/PaymentList.vue"
 import { mount } from "@vue/test-utils"
 import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants'
 
-jest.mock('@/services/data-service', () => ({
-  getPayments: jest.fn(() => Promise.resolve([
-    { id: 1, fromUserId: 1, toUserId: 2, amount: 100, status: 'SUCCESS' }
-  ])),
+jest.mock('@/services/user-service', () => ({
   getUsers: jest.fn(() => Promise.resolve([
     { id: 1, name: 'User 1', upiId: 'user1@upi' },
     { id: 2, name: 'User 2', upiId: 'user2@upi' }
   ]))
+}))
+
+jest.mock('@/services/payment-service', () => ({
+    getPayments: jest.fn(() => Promise.resolve([
+    { id: 1, fromUserId: 1, toUserId: 2, amount: 100, status: 'SUCCESS' }
+  ])),
 }))
 
 describe('PaymentList.vue - Simple Tests', () => {

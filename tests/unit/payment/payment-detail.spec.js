@@ -3,7 +3,7 @@ import PaymentDetail from '@/components/payment/PaymentDetail.vue'
 import { LOCAL_STORAGE } from '@/constants/constants'
 import flushPromises from 'flush-promises'
 
-jest.mock('@/services/data-service', () => ({
+jest.mock('@/services/user-service', () => ({
   getUsers: jest.fn(() => Promise.resolve([
     { id: 1, upiId: 'user1@upi' },
     { id: 2, upiId: 'user2@upi' }

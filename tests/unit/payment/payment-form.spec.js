@@ -1,13 +1,20 @@
 import PaymentForm from '@/components/payment/PaymentForm.vue';
-import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
-import { createPayment } from '@/services/data-service';
+import { EVENTS, LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
 import { shallowMount } from '@vue/test-utils';
 
-jest.mock('@/services/data-service', () => ({
+jest.mock('@/services/user-service', () => ({
+  getUsers: jest.fn(() => Promise.resolve([
+    { id: 1, upiId: 'user1@upi' },
+    { id: 2, upiId: 'user2@upi' }
+  ]))
+}))
+
+jest.mock('@/services/payment-service', () => ({
   getPayments: jest.fn(() => Promise.resolve([
     { id: 1, upiId: 'user1@upi' },
     { id: 2, upiId: 'user2@upi' }
   ])),
+  
   getPaymentById: jest.fn(() => Promise.resolve({
     id: 123,
     fromUserId: 1,
@@ -17,10 +24,6 @@ jest.mock('@/services/data-service', () => ({
   })),
   createPayment: jest.fn(),
   updatePayment: jest.fn(),
-  getUsers: jest.fn(() => Promise.resolve([
-    { id: 1, upiId: 'user1@upi' },
-    { id: 2, upiId: 'user2@upi' }
-  ]))
 }))
 
 describe('PaymentForm.vue', () => {
@@ -79,7 +82,7 @@ describe('PaymentForm.vue', () => {
   });
 
   it('navigates to /payments when cancel is clicked', async () => {
-    await wrapper.find('.cancel-btn').trigger('click');
+    await wrapper.find('.cancel-btn').trigger(EVENTS.CLICK);
     expect(mockRouter.push).toHaveBeenCalledWith('/payments');
   });
 

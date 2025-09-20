@@ -1,7 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import UserList from '@/components/user/UserList.vue'
+import { EVENTS } from '@/constants/constants'
 
-jest.mock('@/services/data-service', () => ({
+jest.mock('@/services/user-service', () => ({
   getUsers: jest.fn(() =>
     Promise.resolve([
       { id: 1, name: 'Nikil', email: 'nikil@mail.com', upiId: 'nikil@upi' },
@@ -42,7 +43,7 @@ describe('UserList.vue', () => {
       global: { mocks: { $router: mockRouter } }
     })
 
-    await wrapper.find('.add-btn').trigger('click')
+    await wrapper.find('.add-btn').trigger(EVENTS.CLICK)
 
     expect(mockRouter.push).toHaveBeenCalledWith('/users/new')
   })

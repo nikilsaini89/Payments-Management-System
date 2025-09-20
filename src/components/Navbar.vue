@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { ACTIONS, EVENTS, LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
+import { ACTIONS, EVENTS, ROLE_TYPE } from '@/constants/constants';
 import { authStore } from '@/store/auth';
 
 

@@ -54,10 +54,7 @@
           "jest": true
         }
       }
-    ],
-    "jest": {
-      "maxWorkers": 1
-    }
+    ]
   },
   "browserslist": [
     "> 1%",

@@ -56,8 +56,8 @@
 
 <script>
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
-import { getUsers } from '@/services/data-service'
-import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/data-service'
+import { getUsers } from '@/services/user-service'
+import { getPayments, getPaymentById, createPayment, updatePayment } from '@/services/payment-service'
 
 export default {
   name: 'PaymentForm',
@@ -140,7 +140,7 @@ export default {
           await updatePayment(this.paymentId, this.form)
         } else {
           const allPayments = await getPayments()
-          const maxId = allPayments.length ? Math.max(...allPayments.map(p => parseInt(p.id))) : 0
+          const maxId = allPayments.length ? Math.max(...allPayments.map(payment => parseInt(payment.id))) : 0
           const newPayment = { id: String(maxId + 1), ...this.form, fromUserId: this.loggedInUser.id, method: 'UPI', referenceId: this.generateTxnId(), timestamp: new Date().toISOString(), status: PAYMENT_STATUS.PENDING }
           await createPayment(newPayment)
         }

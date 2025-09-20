@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { getUsers, createUser } from '../../services/data-service'
+import { getUsers, createUser } from '../../services/user-service'
 
 export default {
   name: 'UserForm',
@@ -104,7 +104,7 @@ export default {
     this.isLoading = true
     try {
         const allUsers = await getUsers()
-        const maxId = allUsers.length ? Math.max(...allUsers.map(u => u.id)) : 0
+        const maxId = allUsers.length ? Math.max(...allUsers.map(user => user.id)) : 0
         const newUser = { id: maxId + 1, ...this.form }
         await createUser(newUser)
         this.$router.push('/users')
