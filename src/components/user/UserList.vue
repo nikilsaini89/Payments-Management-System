@@ -12,6 +12,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>UPI Id</th>
+          <th v-if="isAdmin">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,9 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.upiId }}</td>
+          <td v-if="isAdmin">
+            <button class="edit-btn" @click="deleteUser(user.id)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -27,7 +31,8 @@
 </template>
 
 <script>
-import { getUsers } from '@/services/data-service'
+import { getUsers, deleteUserById } from '@/services/data-service'
+import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants'
 
 export default {
   name: "UserList",
@@ -36,8 +41,27 @@ export default {
       users: []
     }
   },
+  computed: {
+    isAdmin() {
+      const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE)
+      return role === ROLE_TYPE.ADMIN
+    }
+  },
   async mounted() {
     this.users = await getUsers()
+  },
+  methods: {
+    async deleteUser(id) {
+      if (!confirm('Are you sure you want to delete this user?')) return;
+      try {
+        await deleteUserById(id);
+
+        this.users = await getUsers();
+        alert('User deleted successfully');
+      } catch (err) {
+        console.error('Failed to delete user', err)
+      }
+    }
   }
 }
 </script>

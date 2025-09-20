@@ -44,6 +44,16 @@ export const updateUser = async (id, user) => {
   }
 };
 
+export const deleteUserById = async (id) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/users/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error deleting user with id ${id}:`, error);
+    return null;
+  }
+};
+
 // ---------------- PAYMENTS ----------------
 export const getPayments = async () => {
   try {

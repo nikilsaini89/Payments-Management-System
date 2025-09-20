@@ -1,17 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "Aarav Sharma",
-      "email": "aarav.sharma@mail.com",
-      "upiId": "aarav@upi",
-      "phone": "9876543210",
-      "kycStatus": "VERIFIED",
-      "createdAt": "2025-01-10T12:34:56Z",
-      "password": "aarav123",
-      "role": "ADMIN"
-    },
-    {
       "id": "2",
       "name": "Isha Verma",
       "email": "isha.verma@mail.com",
@@ -132,32 +121,18 @@
       "role": "USER"
     },
     {
-      "id": 13,
-      "name": "hihihhi",
-      "email": "hihi@mail.co",
-      "upiId": "sdj33434@",
-      "password": "temp"
-    },
-    {
-      "id": 14,
+      "id": "14",
       "name": "Aarav Sharma",
       "email": "sd33@s.com",
       "upiId": "sdj33434@",
       "password": "34t4rgfb"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Abhay",
       "email": "abhay@mail.com",
       "upiId": "abhay@upi",
       "password": "abhay123"
-    },
-    {
-      "id": 16,
-      "name": "ew",
-      "email": "ee4@dd.co",
-      "upiId": "24r",
-      "password": "234ewd"
     }
   ],
   "payments": [
