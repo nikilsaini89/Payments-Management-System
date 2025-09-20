@@ -7,6 +7,7 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
+import { LOCAL_STORAGE } from './constants/constants';
 import { authStore } from './store/auth';
 
 export default {
@@ -25,6 +26,15 @@ export default {
     showNavbar() {
       const isLoggedIn = this.store.getIsLoggedIn;
       return !!isLoggedIn;
+    }
+  },
+  mounted() {
+    const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
+    const isLoggedIn = localStorage.getItem(LOCAL_STORAGE.IS_LOGGED_IN);
+
+    this.store.setIsLoggedIn(isLoggedIn);
+    if (role) {
+      this.store.setUserRole(role);
     }
   }
 }
