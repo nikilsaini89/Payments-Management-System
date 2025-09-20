@@ -65,9 +65,7 @@ export default {
     handleAction(action) {
       if (action === ACTIONS.LOGOUT) {
         this.store.setUserRole(null);
-        localStorage.removeItem(LOCAL_STORAGE.USER_ROLE);
-        localStorage.removeItem(LOCAL_STORAGE.IS_LOGGED_IN);
-        localStorage.removeItem(LOCAL_STORAGE.LOGGED_IN_USER);
+        localStorage.clear()
         window.location.reload();
       }
       this.showMenu = false;

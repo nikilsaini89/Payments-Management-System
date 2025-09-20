@@ -1,6 +1,3 @@
-
-
-
 <template>
   <div class="payment-form">
     <h1>{{ isEditMode ? 'Edit Payment' : 'Add New Payment' }}</h1>
