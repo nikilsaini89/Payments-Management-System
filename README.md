@@ -99,11 +99,3 @@ Once the application is running, you can log in using the predefined credentials
 ## Data Management
 
 For development purposes, this project uses **mocked data**. The data for users and payments is stored locally, either in JSON files within the project or using the browser's `LocalStorage`. This allows the application to be fully interactive without requiring a backend connection.
-
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-```
-```
