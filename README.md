@@ -21,9 +21,7 @@ The application supports **two roles**:
 
 The **dashboard** provides an overview of total users, total payments, and counts of payments by status (SUCCESS, PENDING, FAILED), displayed in interactive cards.
 
----
-
-## Data Structure
+## Data
 
 The system uses **mocked data** stored in JSON or LocalStorage for development purposes.
 
