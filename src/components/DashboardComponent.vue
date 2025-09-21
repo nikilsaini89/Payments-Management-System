@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { authStore } from '@/store/auth'
 import { getUsers } from '@/services/user-service'
 import { getPayments } from '@/services/payment-service'
 import { LOCAL_STORAGE, PAYMENT_STATUS, ROLE_TYPE } from '@/constants/constants'
@@ -54,8 +53,7 @@ export default {
     return {
       users: [],
       payments: [],
-      loggedInUser: null,
-      store: authStore()
+      loggedInUser: null
     }
   },
   beforeMount() {
@@ -69,9 +67,9 @@ export default {
     const role = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
     const isLoggedIn = localStorage.getItem(LOCAL_STORAGE.IS_LOGGED_IN);
 
-    this.store.setIsLoggedIn(isLoggedIn);
+    this.$store.commit('setIsLoggedIn', isLoggedIn);
     if (role) {
-      this.store.setUserRole(role);
+      this.$store.commit('setUserRole', role);
     }
   },
   computed: {

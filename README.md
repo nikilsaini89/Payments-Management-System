@@ -38,7 +38,7 @@ This application simulates a payment management environment with two distinct us
 ## Tech Stack
 
 -   **Frontend**: Vue 3 (Composition API)
--   **State Management**: Pinia
+-   **State Management**: Vuex
 -   **Routing**: Vue Router
 -   **Mock API**: Json Server
 -   **Styling**: CSS

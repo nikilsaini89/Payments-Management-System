@@ -38,22 +38,19 @@
 
 <script>
 import { ACTIONS, EVENTS, ROLE_TYPE } from '@/constants/constants';
-import { authStore } from '@/store/auth';
-
 
 export default {
   name: 'NavbarComponent',
   data() {
     return {
       showMenu: false,
-      store: authStore(),
       ACTIONS
     };
   },
 
   computed:{
     isAdmin(){
-        return this.store.getUserRole === ROLE_TYPE.ADMIN
+        return this.$store.getters.getUserRole === ROLE_TYPE.ADMIN
     }
   },
 
@@ -64,7 +61,7 @@ export default {
 
     handleAction(action) {
       if (action === ACTIONS.LOGOUT) {
-        this.store.setUserRole(null);
+        this.$store.commit('setUserRole', null);
         localStorage.clear()
         window.location.reload();
       }
@@ -108,12 +105,14 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
+  flex-wrap: wrap;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -122,6 +121,7 @@ export default {
   color: #3b82f6;
   text-decoration: none;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .nav-right {
@@ -137,6 +137,7 @@ export default {
   font-size: 1rem;
   color: #374151;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-link:hover {

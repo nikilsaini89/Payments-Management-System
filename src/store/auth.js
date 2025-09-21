@@ -1,30 +1,22 @@
-import { defineStore } from "pinia";
+import { createStore } from 'vuex';
 
-export const authStore = defineStore('authStore', {
-
-    state: () => {
-        return {
-            userRole: "",
-            isLoggedIn: ""
-        }
+const authStore = createStore({
+  state: {
+    userRole: "",
+    isLoggedIn: ""
+  },
+  mutations: {
+    setUserRole(state, role) {
+      state.userRole = role;
     },
+    setIsLoggedIn(state, status) {
+      state.isLoggedIn = status;
+    }
+  },
+  getters: {
+    getUserRole: (state) => state.userRole,
+    getIsLoggedIn: (state) => state.isLoggedIn
+  }
+});
 
-    actions: {
-        setUserRole(role){
-            this.userRole = role;
-        },
-        
-        setIsLoggedIn(status){
-            this.isLoggedIn = status;
-        }
-    },
-
-    getters: {
-        getUserRole(state) {
-            return state.userRole;
-        },
-        getIsLoggedIn(state) {
-            return state.isLoggedIn;
-        }
-    },
-})
+export default authStore;

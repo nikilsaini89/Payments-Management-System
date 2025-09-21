@@ -1,6 +1,6 @@
 <template>
   <div class="payment-form">
-    <h1>{{ isEditMode ? 'Edit Payment' : 'Add New Payment' }}</h1>
+    <h1>{{ isEditMode ? 'Edit Payment' : 'Create Payment' }}</h1>
 
     <form @submit.prevent="handleSubmit">
       <div class="form-group" v-if="!isUser">

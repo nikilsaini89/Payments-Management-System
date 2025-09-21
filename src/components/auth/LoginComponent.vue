@@ -7,7 +7,7 @@
       <input type="text" id="email" v-model="email" placeholder="abhi@xyz.com" required/>
 
       <label for="password">Enter Password</label>
-      <input type="text" id="password" v-model="password" required/>
+      <input type="password" id="password" v-model="password" required/>
 
       <span v-if="errorMessage" class="error">{{ errorMessage }}</span>
       <button class="login-btn">Login</button>
@@ -19,7 +19,6 @@
 <script>
 import { LOCAL_STORAGE, ROLE_TYPE } from '@/constants/constants';
 import { getUsers } from '@/services/user-service';
-import { authStore } from '@/store/auth';
 
 export default {
   name: "LoginComponent",
@@ -30,11 +29,6 @@ export default {
       password: '',
       errorMessage: ''
     };
-  },
-
-  setup() {
-    const store = authStore()
-    return { store }
   },
 
   methods: {
@@ -51,13 +45,14 @@ export default {
       }
 
         if(user.role === ROLE_TYPE.ADMIN){
-        this.store.setUserRole(ROLE_TYPE.ADMIN);
+        this.$store.commit('setUserRole', ROLE_TYPE.ADMIN);
             localStorage.setItem(LOCAL_STORAGE.USER_ROLE,ROLE_TYPE.ADMIN);
       } else {
-        this.store.setUserRole(ROLE_TYPE.USER);
+        this.$store.commit('setUserRole', ROLE_TYPE.USER);
             localStorage.setItem(LOCAL_STORAGE.USER_ROLE,ROLE_TYPE.USER);
       }
 
+      this.$store.commit('setIsLoggedIn', 'true');
       localStorage.setItem(LOCAL_STORAGE.IS_LOGGED_IN, 'true');
       localStorage.setItem(LOCAL_STORAGE.LOGGED_IN_USER, JSON.stringify(user));
       this.$router.push('/dashboard');
