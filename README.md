@@ -13,6 +13,7 @@ A **Payment Management System** built with **Vue 3** for Admins and Users. The a
 - [Overview](#overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Project `src/` Structure](#project-src-structure)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Data Management](#data-management)
@@ -42,6 +43,45 @@ This application simulates a payment management environment with two distinct us
 -   **Routing**: Vue Router
 -   **Mock API**: Json Server
 -   **Styling**: CSS
+
+## Project `src/` Structure
+
+- `assets/`
+Contains static assets for the application, such as the **application logo**.
+
+- `components/`: Holds all clean and modular Vue components, organized by feature:
+
+    - **`auth/`**
+        - `LoginComponent.vue` – Manages user login functionality with validation and error states.
+
+    - **`payment/`**
+        - `PaymentDetail.vue`, `PaymentForm.vue`, `PaymentList.vue` – Used for handling Payment **CRUD operations**.
+
+    - **`user/`**
+        - `UserForm.vue`, `UserList.vue` – Used for handling User **CRUD operations**. 
+
+    - `Dashboard.vue` – Main dashboard view combining stats and components.
+    - `Navbar.vue` – Navigation bar used across the application.
+
+- `constants/`
+    - `constants.js` – Stores global constants such as **local storage keys**, **roles**, and **payment statuses**.
+
+- `mock-data/`
+    - `data.json` – Contains mock data for **users** and **payments**, used during development/testing.
+
+- `router/`
+    - `index.js` – Contains routing logic using **Vue Router** to manage page navigation.
+
+- `services/`
+    - `payment-service.js` – Handles all **CRUD operations** for payments via API calls.
+    - `user-service.js` – Handles all **CRUD operations** for users via API calls.
+
+- `store/`
+    - `auth.js` – **Vuex store** module for **authentication and state management**.
+
+- Root file
+    - `App.vue` – Main application component that serves as the entry point for the Vue app.
+
 
 ## Getting Started
 
