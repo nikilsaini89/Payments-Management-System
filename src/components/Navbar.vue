@@ -1,10 +1,12 @@
 <template>
+  <!-- Main navigation bar -->
   <nav class="navbar">
     <div class="nav-left">
       <img src="@/assets/logo.png" alt="logo" width="40" height="40" />
       <router-link to="/" class="logo">Payment Management</router-link>
     </div>
     <div>
+      <!-- Navigation links -->
       <router-link
         to="/"
         class="nav-link"
@@ -22,7 +24,7 @@
         :class="{ active : isActive('/payments') }"
       >Payments</router-link>
 
-      <!-- Three dots -->
+      <!-- Dropdown menu for actions -->
       <div class="menu-container">
         <button class="dots-btn" @click="toggleMenu">
           ⋮
@@ -43,22 +45,26 @@ export default {
   name: 'NavbarComponent',
   data() {
     return {
+      // Controls visibility of dropdown
       showMenu: false,
       ACTIONS
     };
   },
 
   computed:{
+    // Check if user is admin
     isAdmin(){
         return this.$store.getters.getUserRole === ROLE_TYPE.ADMIN
     }
   },
 
   methods: {
+    // Toggle dropdown visibility
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
 
+    // Handle menu actions
     handleAction(action) {
       if (action === ACTIONS.LOGOUT) {
         this.$store.commit('setUserRole', null);
@@ -68,6 +74,7 @@ export default {
       this.showMenu = false;
     },
 
+    // Highlight active nav link
     isActive(path) {
         if (path === '/') {
             return this.$route.path === '/'
@@ -76,6 +83,7 @@ export default {
       }
     },
 
+    // Close dropdown when clicking outside
     handleClickOutside(event) {
       const menu = this.$el.querySelector(".menu-container");
       if (menu && !menu.contains(event.target)) {

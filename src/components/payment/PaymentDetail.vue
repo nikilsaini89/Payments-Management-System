@@ -1,4 +1,5 @@
 <template>
+  <!-- Show payment details if available -->
   <div v-if="paymentDetails" class="payment-detail">
     <h2>Payment Details</h2>
     <div class="detail-row">
@@ -37,6 +38,7 @@
     </div>
   </div>
 
+  <!-- Fallback message if no payment is selected -->
   <div v-else class="no-data">
     <p>No payment details found.</p>
   </div>
@@ -51,17 +53,21 @@ export default {
 
   data() {
     return {
+      // Selected payment info
       paymentDetails: null,
+      // All users
       users: [],
       userMap: {},
     }
   },
 
   mounted: async function() {
+    /** Fetch all users to map UPI IDs */
     this.users = await getUsers();
   },
 
   computed: {
+    // Map user IDs to their UPI IDs
     userUpiMap() {
       const map = {};
       this.users.forEach(user => {
@@ -72,11 +78,13 @@ export default {
   },
 
   created() {
+    /** Load selected payment from localStorage */
     const payment = localStorage.getItem(LOCAL_STORAGE.SELECTED_PAYMENT);
     this.paymentDetails =  payment ? JSON.parse(payment) : null;
   },
 
   methods: {
+    // Return class for payment status
     statusClass(status) {
       return {
         success: status === "SUCCESS",

@@ -1,12 +1,16 @@
 <template>
+  <!-- Payment creation/edit form -->
   <div class="payment-form">
     <h1>{{ isEditMode ? 'Edit Payment' : 'Create Payment' }}</h1>
 
     <form @submit.prevent="handleSubmit">
+      <!-- From UPI (read-only for admin) -->
       <div class="form-group" v-if="!isUser">
         <label for="user">From UPI ID</label>
         <input type="text" :value="userUpiMap[form.fromUserId]" disabled/>
       </div>
+
+      <!-- To UPI (selectable for users) -->
       <div class="form-group">
         <label for="user">To UPI ID</label>
         <input type="text" :value="userUpiMap[form.toUserId]" :disabled="!isUser" v-if="!isUser"/>
@@ -19,6 +23,7 @@
         <span class="error" v-if="errors.toUserId">{{ errors.toUserId }}</span>
       </div>
 
+      <!-- Payment amount -->
       <div class="form-group">
         <label for="amount">Amount</label>
         <input
@@ -31,6 +36,7 @@
         <span class="error" v-if="errors.amount">{{ errors.amount }}</span>
       </div>
 
+      <!-- Payment status (editable only for admin) -->
       <div class="form-group" v-if="!isUser">
         <label for="status">Status</label>
         <select id="status" v-model="form.status">
@@ -41,7 +47,7 @@
         <span class="error" v-if="errors.status">{{ errors.status }}</span>
       </div>
 
-
+      <!-- Form action buttons -->
       <div class="form-actions">
         <button type="submit" class="save-btn" :disabled="isLoading">
           {{ isEditMode ? 'Update' : 'Create' }}
@@ -63,6 +69,7 @@ export default {
   name: 'PaymentForm',
   data() {
     return {
+      // Form data
       form: {
         fromUserId: '',
         toUserId: '',
@@ -80,33 +87,27 @@ export default {
   },
 
   computed: {
-    paymentId() {
-      return this.$route.params.id
-    },
-    isEditMode() {
-      return !!this.paymentId
-    },
+    paymentId() { return this.$route.params.id },
+    isEditMode() { return !!this.paymentId },
+    // Check if current user is a regular user
     isUser() {
       const userRole = localStorage.getItem(LOCAL_STORAGE.USER_ROLE);
       return userRole && userRole === ROLE_TYPE.USER
     },
-
-    loggedInUser(){
-      return JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER));
-    },
-
+    loggedInUser(){ return JSON.parse(localStorage.getItem(LOCAL_STORAGE.LOGGED_IN_USER)); },
+    // Map user IDs to UPI IDs for display
     userUpiMap() {
       const map = {}
-      this.users.forEach(user => {
-        map[user.id] = user.upiId
-      })
+      this.users.forEach(user => { map[user.id] = user.upiId })
       return map
     }
   },
 
   async mounted() {
+    /** Fetch users for dropdown */
     this.users = await getUsers()
 
+    /** Load payment for editing if in edit mode */
     if (this.isEditMode) {
       try {
         const payment = await getPaymentById(this.paymentId)
@@ -123,6 +124,7 @@ export default {
     }
   },
   methods: {
+    // Validate required fields
     validate() {
       let valid = true
       this.errors.toUserId = this.form.toUserId ? '' : 'User is required'
@@ -131,6 +133,7 @@ export default {
       return valid
     },
 
+    // Handle form submission
     async handleSubmit() {
       if (!this.validate()) return
 
@@ -153,10 +156,10 @@ export default {
       }
     },
 
-    cancel() {
-      this.$router.push('/payments')
-    },
+    // Cancel and navigate back
+    cancel() { this.$router.push('/payments') },
 
+    // Generate random transaction ID
     generateTxnId() {
       const prefix = "TXN";
       const randomNum = Math.floor(100000 + Math.random() * 900000); 
@@ -165,6 +168,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 .payment-form {

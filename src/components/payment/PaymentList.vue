@@ -1,9 +1,10 @@
 <template>
-  <!-- Header -->
+  <!-- Payments list page with filter and actions -->
   <div class="payment-list">
     <header class="header">
       <h1 style="margin: 0px;">Payments List</h1>
       <div class="header-right">
+        <!-- Filter dropdown -->
         <div>
           <label for="dropdown" style="padding: 20px; font-family: Arial, Helvetica, sans-serif;">Select Filter:</label>
           <select name="dropdown" id="dropdown" class="dropdown" v-model="selectedStatus">
@@ -13,12 +14,14 @@
             <option value="FAILED">Failed</option>
           </select>
         </div>
+        <!-- Create payment button for users -->
         <div v-if="isUser">        
           <button class="create-btn" @click="this.$router.push('/payments/new')">+ Create Payment</button>
         </div>
       </div>
     </header>
 
+    <!-- Payments table -->
     <table class="payments-table">
       <thead>
         <tr>
@@ -31,6 +34,7 @@
         </tr> 
       </thead>
       <tbody v-if="getFilterdPayments().length > 0">
+        <!-- Display filtered payments -->
         <tr v-for="(payment, index) in getFilterdPayments()" :key="payment.id" @click="setPaymentDetailsInLocalStorage(payment.id)" style="cursor: pointer;">
           <td>{{ index + 1 }}</td>
           <td>{{ userMap[payment.fromUserId] || "Unknown" }} ({{ userUpiMap[payment.fromUserId] }})</td>
@@ -38,11 +42,13 @@
           <td>{{ payment.status }}</td>
           <td>Rs. {{ payment.amount }}</td>
           <td v-if="isAdmin">
+            <!-- Edit payment button -->
             <button class="update-btn" @click="navigateToEditPayment($event, payment.id)"> <span>🖊️</span> Update Payment</button>
           </td>
         </tr>  
       </tbody>
       <tbody v-else>
+        <!-- Fallback when no payments exist -->
         <tr>
           <td colspan="5" style="text-align: center; padding: 1rem;">No Payments to show!</td>
         </tr>
@@ -68,12 +74,14 @@ export default{
   },
 
   methods:{
+    // Save selected payment to localStorage and navigate
     setPaymentDetailsInLocalStorage(paymentId){
       const paymentDetails = JSON.stringify(this.payments.find(payment => payment.id === paymentId));
       localStorage.setItem(LOCAL_STORAGE.SELECTED_PAYMENT, paymentDetails);
       this.$router.push(`/payments/${paymentId}`);
     },
 
+    // Filter payments based on user and status
     getFilterdPayments() {
       let result = this.payments;
 
@@ -88,6 +96,7 @@ export default{
       return result;
     },
 
+    // Navigate to edit page without triggering row click
     navigateToEditPayment($event, paymentId) {
       $event.stopPropagation();
       this.$router.push(`/payments/${paymentId}/edit`);
@@ -95,6 +104,7 @@ export default{
   },
 
   computed: {
+    // Map user IDs to names
     userMap() {
       const map = {};
       this.users.forEach(user => {
@@ -103,6 +113,7 @@ export default{
       return map;
     },
 
+    // Map user IDs to UPI IDs
     userUpiMap() {
       const map = {};
       this.users.forEach(user => {
@@ -111,18 +122,21 @@ export default{
       return map;
     },
 
+    // Check if logged-in user is admin
     isAdmin(){
       return localStorage.getItem(LOCAL_STORAGE.USER_ROLE) === ROLE_TYPE.ADMIN
     }
   },
 
   async mounted() {
+    // Determine user type and fetch data
     this.isUser = localStorage.getItem(LOCAL_STORAGE.USER_ROLE) === ROLE_TYPE.USER;
     this.users = await getUsers();
     this.payments = await getPayments()
   }
 }
 </script>
+
 
 <style scoped>
 .header{
